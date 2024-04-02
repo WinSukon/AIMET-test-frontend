@@ -7,12 +7,11 @@ import SeverityResult from "@/components/SeverityResult";
 import getResult from "@/lib/getResult";
 import { Result } from "@/interface";
 
-
-
 export default function Home() {
   const id = useRef<string>("");
   const status = useRef<string>("");
   const levels = useRef<string>("");
+  const [progressNum,setProgressNum] = useState<number>(1)
 
   const [show, setShow] = useState<boolean>(false);
 
@@ -43,6 +42,7 @@ export default function Home() {
     // setTimeout(()=>AIresult(id.current),1000)
     const interval = setInterval(() => {
       AIresult(id.current);
+      setProgressNum((prev)=>prev+1)
       if (status.current === "FINISHED") {
         clearInterval(interval);
         setShow(true);
@@ -52,15 +52,20 @@ export default function Home() {
   }, [id]);
 
   return (
-    <main >
+    <main>
       {/* <Suspense fallback={<Loading />}>
         <div className="flex justify-center  w-full">
           <SeverityResult value={100} />
         </div>
       </Suspense> */}
-      <div className="flex justify-center  w-full h-full">
-        {show ? <SeverityResult levels={levels.current} /> : <Loading></Loading>}
-      </div>
+
+      {show ? (
+        <div className="flex justify-center  w-full h-full">
+          <SeverityResult levels={levels.current} />
+        </div>
+      ) : (
+        <Loading value={progressNum*100/26}></Loading>
+      )}
     </main>
   );
 }

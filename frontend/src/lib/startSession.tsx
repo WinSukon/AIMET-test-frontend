@@ -5,7 +5,7 @@ export default async function startSession() {
       throw new Error("Failed to start session");
     }
     const data = await response.json();
-    console.log(data)
+    console.log(data,"from start session")
     return data
 
   } catch (err) {

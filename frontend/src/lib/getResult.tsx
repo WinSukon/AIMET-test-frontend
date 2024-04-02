@@ -6,6 +6,7 @@ export default async function getResult(session_id:string) {
         throw new Error("Failed to get result");
       }
       const data = await response.json();
+      console.log(data,"from get res")
       return data
     } catch (err) {
       console.log(err);
