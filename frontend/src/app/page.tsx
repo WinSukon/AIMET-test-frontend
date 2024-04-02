@@ -5,7 +5,6 @@ import { Suspense } from "react";
 import Loading from "@/components/Loading";
 import SeverityResult from "@/components/SeverityResult";
 import getResult from "@/lib/getResult";
-import { Result } from "@/interface";
 
 export default function Home() {
   const id = useRef<string>("");
