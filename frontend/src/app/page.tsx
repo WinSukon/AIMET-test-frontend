@@ -52,13 +52,13 @@ export default function Home() {
   }, [id]);
 
   return (
-    <main>
+    <main >
       {/* <Suspense fallback={<Loading />}>
         <div className="flex justify-center  w-full">
           <SeverityResult value={100} />
         </div>
       </Suspense> */}
-      <div className="flex justify-center  w-full">
+      <div className="flex justify-center  w-full h-full">
         {show ? <SeverityResult levels={levels.current} /> : <Loading></Loading>}
       </div>
     </main>
