@@ -7,6 +7,8 @@ import SeverityResult from "@/components/SeverityResult";
 import getResult from "@/lib/getResult";
 import { Result } from "@/interface";
 
+
+
 export default function Home() {
   const id = useRef<string>("");
   const status = useRef<string>("");
@@ -57,7 +59,7 @@ export default function Home() {
         </div>
       </Suspense> */}
       <div className="flex justify-center  w-full">
-        {show ? <SeverityResult value={100} /> : <Loading></Loading>}
+        {show ? <SeverityResult levels={levels.current} /> : <Loading></Loading>}
       </div>
     </main>
   );
