@@ -1,10 +1,10 @@
 "use client";
-import startSession from "@/libs/startSession";
+import startSession from "@/lib/startSession";
 import { useEffect, useState } from "react";
 import { Suspense } from "react";
 import Loading from "@/components/Loading";
 import SeverityResult from "@/components/SeverityResult";
-import getResult from "@/libs/getResult";
+import getResult from "@/lib/getResult";
 export default function Home() {
   const [status, setStatus] = useState<boolean>(false);
   const [levels, setLevels] = useState<string | null>(null);
@@ -27,17 +27,13 @@ export default function Home() {
   });
   return (
     <main>
-      <div className="flex items-center w-full">
-        <Suspense fallback={<Loading />}>
-          <SeverityResult />
-        </Suspense>
-      </div>
+      <Suspense fallback={<Loading />}>
+        <div className="flex justify-center  w-full">
+          <SeverityResult value={100} />
+        </div>
+      </Suspense>
 
-      {/* {
-        status?
-        <SeverityResult/>:
-        <Loading/>
-      } */}
+
     </main>
   );
 }
