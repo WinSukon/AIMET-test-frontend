@@ -14,13 +14,10 @@ const SeverityResult = ({ value }: { value: number }) => {
         </div>
         <div className="w-4/5 m-2">
           <div className="bg-gradient-to-r rounded-lg from-[#5FC88F] via-[#FFCC7E]  to-[#FF6464] h-5 ">
-            <div 
-            style={{width:`${value}%`}}
-            className="flex justify-end">
+            <div style={{ width: `${value}%` }} className=" flex justify-end ">
               <Image src="/Heart.svg" alt="heart" width={40} height={40} />
             </div>
           </div>
-          
 
           <div className="flex justify-between text-[#A9AAB6] little-text my-2">
             <div>ต่ำ</div>
@@ -29,6 +26,7 @@ const SeverityResult = ({ value }: { value: number }) => {
           </div>
         </div>
       </div>
+
       <div className=" small-text text-[#FF6464] ">
         หมอขอข้อมูลเพื่อให้เจ้าหน้าที่ติดต่อกลับไป
       </div>

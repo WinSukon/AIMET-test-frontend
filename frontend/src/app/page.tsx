@@ -1,39 +1,67 @@
 "use client";
 import startSession from "@/lib/startSession";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Suspense } from "react";
 import Loading from "@/components/Loading";
 import SeverityResult from "@/components/SeverityResult";
 import getResult from "@/lib/getResult";
-export default function Home() {
-  const [status, setStatus] = useState<boolean>(false);
-  const [levels, setLevels] = useState<string | null>(null);
+import { Result } from "@/interface";
 
-  useEffect(() => {
-    const start = async () => {
-      const start = await startSession();
-      const session_id = start.data.session_id;
-      const res = await getResult(session_id);
-      console.log("id :", session_id);
-      const ai_status = res.data.result_ai_status;
-      if (ai_status === "PROCESSING") {
-        setStatus(false);
-      } else if (ai_status === "FINISHED") {
-        setStatus(true);
+export default function Home() {
+  const id = useRef<string>("");
+  const status = useRef<string>("");
+  const levels = useRef<string>("");
+  // const [status, setStatus] = useState<string>("");
+  // const [levels, setLevels] = useState<string>("");
+
+  const AIresult = async (id: string) => {
+    const res = await getResult(id);
+    if (res) {
+      console.log(
+        id,
+        res.message,
+        res.data.result_ai_status,
+        res.data.result_ai_severity_level
+      );
+      status.current = res.data.result_ai_status;
+
+      if (res.data.result_ai_severity_level !== null) {
+        levels.current = res.data.result_ai_severity_level;
       }
-      setLevels(res.data.result_ai_severity_level);
+      console.log(status.current, levels.current, "test");
+    }
+  };
+  //for get session id
+  useEffect(() => {
+    const getID = async () => {
+      const res = await startSession();
+      if (res) {
+        id.current = res.data.session_id;
+        console.log(id.current);
+      }
     };
-    start();
-  });
+    getID();
+  }, []);
+  //fetch data until satisfied
+  useEffect(() => {
+    // setTimeout(()=>AIresult(id.current),1000)
+    const interval = setInterval(() => {
+      AIresult(id.current);
+      if (status.current === "FINISHED") {
+        clearInterval(interval);
+        console.log("interval cleared")
+      }
+    }, 1000);
+  }, [id]);
+
   return (
     <main>
-      <Suspense fallback={<Loading />}>
+      {/* <Suspense fallback={<Loading />}>
         <div className="flex justify-center  w-full">
           <SeverityResult value={100} />
         </div>
-      </Suspense>
-
-
+      </Suspense> */}
+      {levels.current!=="" ? <SeverityResult value={100} /> : <Loading></Loading>}
     </main>
   );
 }
