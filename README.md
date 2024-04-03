@@ -42,3 +42,4 @@ cd .\technical-test-frontend-mock-server-main\
 ```bash
 pnpm start
 ```
+The Webapp should now be accessible via `http://localhost:3000`
