@@ -19,4 +19,26 @@ npm i -g pnpm
 ```
 
 ## How to run
-# Frontend
+**Frontend**
+1. navigate to frontend folder
+   
+```bash
+cd .\frontend\
+```
+2. run the development server
+
+```bash
+npm run dev
+```
+
+**Backend**
+1. navigate to backend folder
+   
+```bash
+cd .\technical-test-frontend-mock-server-main\
+```
+2. run the server on port 8080
+
+```bash
+pnpm start
+```
