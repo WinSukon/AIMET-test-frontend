@@ -8,19 +8,20 @@ export default async function postFeedback(
       {
         method: "POST",
         headers: {
-            'Content-Type': 'application/json',
-          },
-        body: feedback
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ feedback: feedback }),
       }
-    
     );
 
-    if(!response.ok){
-        throw new Error("failed to post feedback")
+    if (!response.ok) {
+      throw new Error("failed to post feedback");
     }
 
-    return await response.json()
-  } catch(err) {
-    console.log(err)
+    const data = await response.json();
+
+    return data;
+  } catch (err) {
+    console.log(err);
   }
 }

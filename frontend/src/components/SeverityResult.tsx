@@ -11,15 +11,30 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import postFeedback from "@/lib/postFeedback";
 
 const levels_mapper = new Map<string, number>([
   ["LOW", 0],
   ["SEVERE", 100],
 ]);
 
-const SeverityResult = ({ levels }: { levels: string }) => {
+const SeverityResult = ({
+  levels,
+  session_id,
+}: {
+  levels: string;
+  session_id: string;
+}) => {
+  const [feedback, setFeedback] = useState<string>("");
   const value = levels_mapper.get(levels);
-  console.log(value);
+  const handleSubmit = (e: any) => {
+    const res = postFeedback(session_id, feedback);
+
+    console.log(res, "test send feedback");
+
+    setFeedback("");
+  };
+
   return (
     <div className="text-center rounded-lg w-[700px] flex flex-col h-full justify-center">
       <div className="large-text text-[#3E3F45] m-8">ผลการประเมินของคุณ</div>
@@ -93,12 +108,13 @@ const SeverityResult = ({ levels }: { levels: string }) => {
               แสดงความคิดเห็นเพิ่มเติม
             </DrawerTitle>
           </DrawerHeader>
-          <form action="">
+          <form action={handleSubmit}>
             <textarea
               placeholder="ความคิดเห็น..."
               className="flex p-2 m-auto resize-none rounded-lg border-[#D6D9DB] border-solid border-2 w-full"
               rows={5}
-              // cols={50}
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
               required
             ></textarea>
             <DrawerClose className="w-full ">
@@ -110,8 +126,7 @@ const SeverityResult = ({ levels }: { levels: string }) => {
               </button>
             </DrawerClose>
           </form>
-          <DrawerFooter>
-          </DrawerFooter>
+          <DrawerFooter></DrawerFooter>
         </DrawerContent>
       </Drawer>
     </div>
